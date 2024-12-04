@@ -1,0 +1,5 @@
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="2.3">
+    <application>
+        <el-resolver>org.jboss.weld.el.WeldELResolver</el-resolver>
+    </application>
+</faces-config>
