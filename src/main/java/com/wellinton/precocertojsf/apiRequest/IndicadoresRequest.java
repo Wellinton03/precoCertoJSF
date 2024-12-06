@@ -42,6 +42,12 @@ public class IndicadoresRequest {
         restTemplate.postForObject(url, data, Void.class);
     }
     
+    public void editar(IndicadorRequestDTO data) {
+        String url = baseUrl + "/editar";
+        
+        restTemplate.put(url, data, Void.class);
+    }
+    
      public void excluir(Long id) {
         String url = baseUrl + "/excluir/" + id;
         

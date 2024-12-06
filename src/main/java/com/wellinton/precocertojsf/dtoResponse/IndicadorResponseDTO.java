@@ -8,6 +8,7 @@ package com.wellinton.precocertojsf.dtoResponse;
  *
  * @author welli
  */
+
 public record IndicadorResponseDTO(String description, Long id) {
     
     

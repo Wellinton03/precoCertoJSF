@@ -9,7 +9,6 @@ import com.wellinton.precocertojsf.apiRequest.IndicadoresRequest;
 import com.wellinton.precocertojsf.dtoRequest.IndicadorRequestDTO;
 import com.wellinton.precocertojsf.dtoResponse.IndicadorResponseDTO;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.Flash;
 import jakarta.faces.view.ViewScoped;
@@ -34,24 +33,31 @@ public class IndicadoresBean implements Serializable {
     
     private IndicadorRequestDTO indicadorSelecionado;
     private List<IndicadorResponseDTO> indicadores;
-    private String description;
-    private Long id;
     
     
     @PostConstruct
     public void Init() {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
             indicadorSelecionado = (IndicadorRequestDTO) flash.get("indicadorSelecionado");
+            
         if(indicadorSelecionado == null) {
-            System.out.println("IndicadorRequest está nulo");
+             System.out.println("Nenhum indicador encontrado no Flash. Inicializando um novo objeto.");
             indicadorSelecionado = new IndicadorRequestDTO();
         }
         carregarIndicadores(); 
+       
     }
     
-     public String editar(IndicadorRequestDTO indicadorDTO) {
+     public String editar(IndicadorResponseDTO indicadorResponseDTO) {
          Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-    flash.put("indicadorSelecionado", indicadorDTO); 
+
+            IndicadorRequestDTO indicadorRequestDTO = new IndicadorRequestDTO();
+            indicadorRequestDTO.setId(indicadorResponseDTO.getId());
+            indicadorRequestDTO.setDescription(indicadorResponseDTO.getDescription());
+
+            flash.put("indicadorSelecionado", indicadorRequestDTO); 
+            flash.setKeepMessages(true);
+            flash.setRedirect(true);
 
     return "CadastroDeIndicadores?faces-redirect=true";
 }
@@ -75,27 +81,14 @@ public class IndicadoresBean implements Serializable {
     }
     
     public String salvar() {
-        if(indicadorSelecionado.getDescription() != null) {
+    if (indicadorSelecionado != null && indicadorSelecionado.getId() == null) {
+            indicadoresRequest.salvar(indicadorSelecionado);
             
-        try {
-                indicadoresRequest.salvar(indicadorSelecionado);
-        } catch (Exception e ) {
-            e.printStackTrace();
-            
-            FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage(FacesMessage.FACES_MESSAGES,
-            "Erro ao salvar o Indicador, Por favor tente novamente"));
-            
-            return null;
-        }
-        
-    } else {
-            FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage(FacesMessage.FACES_MESSAGES,
-                    "Por favor, adicione um Indicador válido e tente novamente"));
-        }
-        return "ListaDeIndicadores?faces-redirect=true";
+    } else if(indicadorSelecionado != null && indicadorSelecionado.getId() != null) {
+         indicadoresRequest.editar(indicadorSelecionado);
     }
+    return "ListaDeIndicadores?faces-redirect=true"; 
+}
     
     
     
@@ -105,22 +98,6 @@ public class IndicadoresBean implements Serializable {
         carregarIndicadores();
 }
         
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public IndicadorRequestDTO getIndicadorSelecionado() {

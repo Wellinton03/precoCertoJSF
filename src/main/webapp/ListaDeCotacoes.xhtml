@@ -14,8 +14,6 @@
 
 <body>
     
-  
-
 		<h:form id="form">
 		
 			<nav class="navbar fixed-top">
@@ -112,12 +110,12 @@
 	</div>
    		
     <div id="dataTable">
-    <h:dataTable id="resultTable" value="#{cotacoesControllerBean.listaCotacoes}" var="cotacoes" class="table table-hover">
+        <h:dataTable id="resultTable" value="#{cotacoesBean.cotacoes}" var="cotacoes" class="table table-hover">
     <h:column>
         <f:facet name="header">
-            <h:outputText value="ID" />
+            <h:outputText value="Indicador" />
         </f:facet>
-        <h:outputText value="#{cotacoes.indicadores.description}" />
+        <h:outputText value="#{cotacoes.indicadorResponseDTO.description}" />
     </h:column>
     
     <h:column>
@@ -137,7 +135,7 @@
         <f:facet name="header">
             <h:outputText value="Data e Hora" />
         </f:facet>
-        <h:outputText value="#{cotacoesControllerBean.formatLocalDateTime(cotacoes.dataHora)}" />
+        <h:outputText value="#{cotacoes.dataHora}" />
     </h:column>
     
     <h:column >
@@ -190,8 +188,7 @@
        		<h:selectOneMenu
 			id="indicadorAPI"
 			value="#{cotacoesControllerBean.selectedIndicador}"
-            class="input-indicator-API"
-			converter="indicadoresConverter">
+            class="input-indicator-API">
 				<f:selectItem itemLabel="Selecione..."
 					noSelectionOption="true"
 					itemValue=""/>
@@ -223,8 +220,7 @@
    				<h:inputText  
    					id="dateInitial"
    					class="input-dateHour-initial " 
-   					value="#{cotacoesControllerBean.dataInicial}"
-   					converter="localDateTimeConverter" >
+   					value="#{cotacoesControllerBean.dataInicial}">
    					<f:passThroughAttribute name="type" value="datetime-local"/>
    					</h:inputText>
    					
@@ -239,8 +235,7 @@
    				<h:inputText  
    					id="dateEnd"
    					class="input-dateHour-final " 
-   					value="#{cotacoesControllerBean.dataFinal}"
-   					converter="localDateTimeConverter">
+   					value="#{cotacoesControllerBean.dataFinal}">
    					<f:passThroughAttribute name="type" value="datetime-local"/>
 		   		</h:inputText>	
    		</div>			

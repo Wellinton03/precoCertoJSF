@@ -103,7 +103,7 @@
     
     <h:column  >
     
-   	 	  <h:commandLink class="icon-edit-indicator" action="#{indicadoresBean.editarIndicador(indicadores)}">
+        <h:commandLink class="icon-edit-indicator" action="#{indicadoresBean.editar(indicadores)}">
                     <i class="bi bi-pencil-square"></i>
                   </h:commandLink>
         
@@ -123,7 +123,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">CONFIRMAÇÃO DE EXCLUSÃO</h5>
-        <h:commandButton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></h:commandButton>
+        <h:commandButton class="btn-close"></h:commandButton>
       </div>
       <div class="modal-body">
          <p>Deseja excluir o indicador <strong>#{indicadoresBean.indicadorSelecionado.description}</strong>?</p>

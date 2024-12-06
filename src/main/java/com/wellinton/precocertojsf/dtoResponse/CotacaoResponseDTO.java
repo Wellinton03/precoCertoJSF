@@ -9,9 +9,24 @@ package com.wellinton.precocertojsf.dtoResponse;
  *
  * @author welli
  */
-public class CotacaoResponseDTO {
 
+public record CotacaoResponseDTO(Long id, IndicadorResponseDTO indicadorResponseDTO, String dataHora, Double valor) {
 
+    public Long getId() {
+        return id;
+    }
+    
+    public IndicadorResponseDTO getIndicadorResponseDTO() {
+        return indicadorResponseDTO;
+    }
+    
+    public String getDataHora(){
+        return dataHora;
+    }
+    
+    public Double getValor(){
+        return valor;
+    }
 }
 
 
