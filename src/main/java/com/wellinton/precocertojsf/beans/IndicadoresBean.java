@@ -3,27 +3,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/*
 package com.wellinton.precocertojsf.beans;
 
+import com.wellinton.precocertojsf.apiRequest.IndicadoresRequest;
+import com.wellinton.precocertojsf.dtoRequest.IndicadorRequestDTO;
+import com.wellinton.precocertojsf.dtoResponse.IndicadorResponseDTO;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.Flash;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author welli
  */
 
-/*
 @Named
 @ViewScoped
-public class IndicadoresBean {
+public class IndicadoresBean implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @Inject
     private IndicadoresRequest indicadoresRequest;
     
-    private IndicadorResponseDTO indicadorSelecionado;
+    private IndicadorRequestDTO indicadorSelecionado;
     private List<IndicadorResponseDTO> indicadores;
     private String description;
     private Long id;
@@ -31,7 +40,30 @@ public class IndicadoresBean {
     
     @PostConstruct
     public void Init() {
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+            indicadorSelecionado = (IndicadorRequestDTO) flash.get("indicadorSelecionado");
+        if(indicadorSelecionado == null) {
+            System.out.println("IndicadorRequest está nulo");
+            indicadorSelecionado = new IndicadorRequestDTO();
+        }
         carregarIndicadores(); 
+    }
+    
+     public String editar(IndicadorRequestDTO indicadorDTO) {
+         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+    flash.put("indicadorSelecionado", indicadorDTO); 
+
+    return "CadastroDeIndicadores?faces-redirect=true";
+}
+    
+    public void prepararExclusão(IndicadorResponseDTO indicadorResponse){
+        if(indicadorResponse != null) {
+             if (indicadorSelecionado == null) {
+            indicadorSelecionado = new IndicadorRequestDTO();
+        }
+            indicadorSelecionado.setId(indicadorResponse.getId());
+            indicadorSelecionado.setDescription(indicadorResponse.getDescription());
+        }
     }
     
     public void carregarIndicadores() {
@@ -39,16 +71,14 @@ public class IndicadoresBean {
     }
     
     public List<IndicadorResponseDTO> getIndicadores() {
-        System.out.println(indicadores);
         return indicadores;
     }
     
     public String salvar() {
-        if(description != null) {
+        if(indicadorSelecionado.getDescription() != null) {
             
         try {
-            IndicadorDTO indicadorDTO = new IndicadorDTO(description, id);
-                indicadoresRequest.salvar(indicadorDTO);
+                indicadoresRequest.salvar(indicadorSelecionado);
         } catch (Exception e ) {
             e.printStackTrace();
             
@@ -71,12 +101,11 @@ public class IndicadoresBean {
     
     public void excluir() {
         if(indicadorSelecionado.getId() != null) {
-            System.out.println(indicadorSelecionado.getId());
         indicadoresRequest.excluir(indicadorSelecionado.getId());
+        carregarIndicadores();
 }
         
     }
-    
 
     public String getDescription() {
         return description;
@@ -94,11 +123,11 @@ public class IndicadoresBean {
         this.id = id;
     }
 
-    public IndicadorResponseDTO getIndicadorSelecionado() {
+    public IndicadorRequestDTO getIndicadorSelecionado() {
         return indicadorSelecionado;
     }
 
-    public void setIndicadorSelecionado(IndicadorResponseDTO indicadorSelecionado) {
+    public void setIndicadorSelecionado(IndicadorRequestDTO indicadorSelecionado) {
         this.indicadorSelecionado = indicadorSelecionado;
     }
     
@@ -106,4 +135,3 @@ public class IndicadoresBean {
     
     
 }
-*/

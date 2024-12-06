@@ -103,14 +103,13 @@
     
     <h:column  >
     
-   	 	 <h:commandLink class="icon-edit-indicator" >
-            <i class="bi bi-pencil-square"></i>
-        </h:commandLink>
+   	 	  <h:commandLink class="icon-edit-indicator" action="#{indicadoresBean.editarIndicador(indicadores)}">
+                    <i class="bi bi-pencil-square"></i>
+                  </h:commandLink>
         
-   		<h:commandLink class="icon-trash-indicator" value="">
-                    <f:setPropertyActionListener target="#{indicadoresBean.indicadorSelecionado}" value="#{indicadores}" />
-    		<f:ajax render="modalConfirmacaoExclusao" onevent="abrirModal" />
-    		<i class="bi bi-trash3"></i>
+   		 <h:commandLink class="icon-trash-indicator" action="#{indicadoresBean.prepararExclusão(indicadores)}" >
+                    <f:ajax render="@form" onevent="abrirModal" />
+                    <i class="bi bi-trash3"></i>
 		</h:commandLink>
 		
     </h:column>
