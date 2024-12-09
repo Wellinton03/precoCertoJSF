@@ -4,6 +4,8 @@
  */
 package com.wellinton.precocertojsf.apiRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wellinton.precocertojsf.dtoRequest.CotacaoRequestDTO;
 import com.wellinton.precocertojsf.dtoRequest.IndicadorRequestDTO;
 import com.wellinton.precocertojsf.dtoResponse.CotacaoResponseDTO;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -27,7 +30,19 @@ public class CotacoesRequest {
     private final String baseUrl = "http://localhost:8080/precoCerto/api/cotacao";
     
      public CotacoesRequest() {
-        this.restTemplate = new RestTemplate();
+        this.restTemplate = createRestTemplate();
+    }
+
+    private RestTemplate createRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
+        restTemplate.getMessageConverters().add(0, converter);
+
+        return restTemplate;
     }
      
      public List<CotacaoResponseDTO> listarCotacoes() {

@@ -12,6 +12,8 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -27,7 +29,9 @@ public class CotacoesBean implements Serializable {
     
     private List<CotacaoResponseDTO> cotacoes;
     
-    private CotacaoRequestDTO cotacaoSelecionada;
+    private CotacaoRequestDTO cotacaoRequestDTO;
+    
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     
     @Inject
     private CotacoesRequest cotacoesRequest;
@@ -36,17 +40,22 @@ public class CotacoesBean implements Serializable {
     public void Init() {
         carregarCotacoes();
         
-        if(cotacaoSelecionada == null) {
-            cotacaoSelecionada = new CotacaoRequestDTO();
+        if(cotacaoRequestDTO == null) {
+            cotacaoRequestDTO = new CotacaoRequestDTO();
         }
     }
     
+    public static String formatLocalDateTime(LocalDateTime dateTime) {
+        return dateTime.format(FORMATTER);
+    }
+    
     public String salvar() {
-    if (cotacaoSelecionada != null && cotacaoSelecionada.getIndicadorRequestDTO().getId() != null && cotacaoSelecionada.getId() == null) {
-            cotacoesRequest.salvar(cotacaoSelecionada);
+        System.out.println(cotacaoRequestDTO.toString());
+    if (cotacaoRequestDTO != null && cotacaoRequestDTO.getIndicadorRequestDTO().getId() != null && cotacaoRequestDTO.getId() == null) {
+            cotacoesRequest.salvar(cotacaoRequestDTO);
             
-    } else if(cotacaoSelecionada  != null && cotacaoSelecionada.getIndicadorRequestDTO().getId() != null && cotacaoSelecionada.getId() != null) {
-         cotacoesRequest.editar(cotacaoSelecionada);
+    } else if(cotacaoRequestDTO  != null && cotacaoRequestDTO.getIndicadorRequestDTO().getId() != null && cotacaoRequestDTO.getId() != null) {
+         cotacoesRequest.editar(cotacaoRequestDTO);
     }
     return "ListaDeCotacoes?faces-redirect=true"; 
 }
@@ -59,12 +68,12 @@ public class CotacoesBean implements Serializable {
         return cotacoes;
     }
 
-    public CotacaoRequestDTO getCotacaoSelecionada() {
-        return cotacaoSelecionada;
+    public CotacaoRequestDTO getcotacaoRequestDTO() {
+        return cotacaoRequestDTO;
     }
 
-    public void setCotacaoRequestDTO(CotacaoRequestDTO cotacaoSelecionada) {
-        this.cotacaoSelecionada = cotacaoSelecionada;
+    public void setCotacaoRequestDTO(CotacaoRequestDTO cotacaoRequestDTO) {
+        this.cotacaoRequestDTO = cotacaoRequestDTO;
     }
     
     

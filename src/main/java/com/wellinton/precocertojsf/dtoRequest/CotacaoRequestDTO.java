@@ -60,6 +60,13 @@ public class CotacaoRequestDTO {
     public void setValor(Double valor) {
         this.valor = valor;
     }
+
+    @Override
+    public String toString() {
+        return "CotacaoRequestDTO{" + "id=" + id + ", indicadorRequestDTO=" + indicadorRequestDTO + ", dataHora=" + dataHora + ", valor=" + valor + '}';
+    }
+    
+    
     
     
 }

@@ -135,7 +135,7 @@
         <f:facet name="header">
             <h:outputText value="Data e Hora" />
         </f:facet>
-        <h:outputText value="#{cotacoes.dataHora}" />
+        <h:outputText value="#{cotacoesBean.formatLocalDateTime(cotacoes.dataHora)}" />
     </h:column>
     
     <h:column >

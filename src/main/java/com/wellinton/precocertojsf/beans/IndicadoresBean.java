@@ -108,6 +108,16 @@ public class IndicadoresBean implements Serializable {
         this.indicadorSelecionado = indicadorSelecionado;
     }
     
+    public IndicadorResponseDTO getIndicadorById(Long id) {
+    if (indicadores == null || id == null) {
+        return null;
+    }
+    return indicadores.stream()
+                      .filter(indicador -> indicador.getId().equals(id))
+                      .findFirst()
+                      .orElse(null);
+}
+    
     
     
     

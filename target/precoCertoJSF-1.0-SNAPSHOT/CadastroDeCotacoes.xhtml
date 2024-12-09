@@ -94,12 +94,13 @@
    				<h:selectOneMenu
    					id="indicator"
    					class="input-indicator"
-                                        value="#{cotacoesBean.cotacaoSelecionada.indicadorRequestDTO}">
+                                        value="#{cotacoesBean.cotacaoRequestDTO.indicadorRequestDTO}"
+                                        converter="indicadorDTOConverter">
                         <f:selectItem itemLabel="Selecione..."
                                       noSelectionOption="true"
                                       itemValue="" />
                         <f:selectItems value="#{indicadoresBean.indicadores}" var="indicador"
-                                       itemLabel="#{indicador.description}" itemValue="#{indicador.id}"/>
+                                       itemLabel="#{indicador.description}" itemValue="#{indicador}"/>
    				</h:selectOneMenu>
    				
    			</div>
@@ -114,7 +115,8 @@
    				<h:inputText  
    					id="dateHour"
    					class="input-dateHour " 
-                                        value="#{cotacoesBean.cotacaoSelecionada.dataHora}">
+                                        value="#{cotacoesBean.cotacaoRequestDTO.dataHora}"
+                                        converter="localDateTimeConverter">
    					<f:passThroughAttribute name="type" value="datetime-local"/>
    					</h:inputText>
    					
@@ -130,7 +132,7 @@
    				<h:inputText 
    					id="price"  
    					class="input-price" 
-                                        value="#{cotacoesBean.cotacaoSelecionada.valor}">
+                                        value="#{cotacoesBean.cotacaoRequestDTO.valor}">
    						<f:convertNumber maxFractionDigits="2"/>
                			<f:passThroughAttribute name="placeholder" value="0,00"/>
    					</h:inputText >

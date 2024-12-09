@@ -3,7 +3,9 @@ com\wellinton\precocertojsf\PrecoCertoJSF.class
 com\wellinton\precocertojsf\apiRequest\CotacoesRequest.class
 com\wellinton\precocertojsf\dtoResponse\IndicadorResponseDTO.class
 com\wellinton\precocertojsf\dtoRequest\IndicadorRequestDTO.class
+com\wellinton\precocertojsf\converter\LocalDateTimeConverter.class
 com\wellinton\precocertojsf\beans\CotacoesBean.class
 com\wellinton\precocertojsf\beans\IndicadoresBean.class
 com\wellinton\precocertojsf\dtoResponse\CotacaoResponseDTO.class
 com\wellinton\precocertojsf\apiRequest\IndicadoresRequest.class
+com\wellinton\precocertojsf\converter\IndicadorDTOConverter.class

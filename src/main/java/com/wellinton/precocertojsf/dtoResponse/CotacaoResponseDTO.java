@@ -4,13 +4,15 @@
  */
 package com.wellinton.precocertojsf.dtoResponse;
 
+import java.time.LocalDateTime;
+
 
 /**
  *
  * @author welli
  */
 
-public record CotacaoResponseDTO(Long id, IndicadorResponseDTO indicadorResponseDTO, String dataHora, Double valor) {
+public record CotacaoResponseDTO(Long id, IndicadorResponseDTO indicadorResponseDTO, LocalDateTime dataHora, Double valor) {
 
     public Long getId() {
         return id;
@@ -20,7 +22,7 @@ public record CotacaoResponseDTO(Long id, IndicadorResponseDTO indicadorResponse
         return indicadorResponseDTO;
     }
     
-    public String getDataHora(){
+    public LocalDateTime getDataHora(){
         return dataHora;
     }
     
