@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
  */
 public class CotacaoRequestDTO {
 
-    Long id;
-    IndicadorRequestDTO indicadorRequestDTO;
-    LocalDateTime dataHora;
-    Double valor;
+    private Long id;
+    private IndicadorRequestDTO indicadorRequestDTO;
+    private LocalDateTime dataHora;
+    private Double valor;
     
     
     public CotacaoRequestDTO() {
@@ -41,6 +41,7 @@ public class CotacaoRequestDTO {
     }
 
     public void setIndicadorRequestDTO(IndicadorRequestDTO indicadorRequestDTO) {
+        System.out.println("indicadorRequest " + indicadorRequestDTO);
         this.indicadorRequestDTO = indicadorRequestDTO;
     }
 
@@ -58,6 +59,7 @@ public class CotacaoRequestDTO {
     }
 
     public void setValor(Double valor) {
+        System.out.println(valor);
         this.valor = valor;
     }
 

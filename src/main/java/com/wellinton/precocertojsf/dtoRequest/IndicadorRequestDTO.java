@@ -45,4 +45,11 @@ public class IndicadorRequestDTO {
          this.id = id;
      }
 
+    @Override
+    public String toString() {
+        return "IndicadorRequestDTO{" + "description=" + description + ", id=" + id + '}';
+    }
+     
+     
+
 }

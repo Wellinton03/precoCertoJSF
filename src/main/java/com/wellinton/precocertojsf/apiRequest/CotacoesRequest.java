@@ -7,7 +7,6 @@ package com.wellinton.precocertojsf.apiRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wellinton.precocertojsf.dtoRequest.CotacaoRequestDTO;
-import com.wellinton.precocertojsf.dtoRequest.IndicadorRequestDTO;
 import com.wellinton.precocertojsf.dtoResponse.CotacaoResponseDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;

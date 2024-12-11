@@ -37,12 +37,13 @@ public class CotacoesBean implements Serializable {
     private CotacoesRequest cotacoesRequest;
     
     @PostConstruct
-    public void Init() {
+    public void init() {
         carregarCotacoes();
         
         if(cotacaoRequestDTO == null) {
             cotacaoRequestDTO = new CotacaoRequestDTO();
         }
+        
     }
     
     public static String formatLocalDateTime(LocalDateTime dateTime) {
@@ -50,7 +51,7 @@ public class CotacoesBean implements Serializable {
     }
     
     public String salvar() {
-        System.out.println(cotacaoRequestDTO.toString());
+        System.out.println("método de salvar foi chamado " + cotacaoRequestDTO.toString());
     if (cotacaoRequestDTO != null && cotacaoRequestDTO.getIndicadorRequestDTO().getId() != null && cotacaoRequestDTO.getId() == null) {
             cotacoesRequest.salvar(cotacaoRequestDTO);
             
@@ -68,7 +69,7 @@ public class CotacoesBean implements Serializable {
         return cotacoes;
     }
 
-    public CotacaoRequestDTO getcotacaoRequestDTO() {
+    public CotacaoRequestDTO getCotacaoRequestDTO() {
         return cotacaoRequestDTO;
     }
 

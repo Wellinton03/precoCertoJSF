@@ -109,7 +109,9 @@ public class IndicadoresBean implements Serializable {
     }
     
     public IndicadorResponseDTO getIndicadorById(Long id) {
+        System.out.println("id recebido no bean" + id);
     if (indicadores == null || id == null) {
+        System.out.println(indicadores);
         return null;
     }
     return indicadores.stream()
