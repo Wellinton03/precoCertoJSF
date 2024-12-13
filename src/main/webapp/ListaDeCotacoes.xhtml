@@ -101,9 +101,9 @@
         		<span id="searchIcon" class="input-group-text">
             		<i class="bi bi-search"></i>
         		</span>
-        		<h:inputText class="input-search" value="#{cotacoesControllerBean.termoPesquisa}" >
+        		<h:inputText class="input-search"  >
     			<f:ajax event="keyup" 
-             		listener="#{cotacoesControllerBean.pesquisa()}" 
+             		 
              		render="resultTable" />
 				</h:inputText>
     	</div>
@@ -115,7 +115,7 @@
         <f:facet name="header">
             <h:outputText value="Indicador" />
         </f:facet>
-        <h:outputText value="#{cotacoes.indicadorResponseDTO.description}" />
+        <h:outputText value="#{cotacoes.indicadorDTO.description}" />
     </h:column>
     
     <h:column>
@@ -139,13 +139,12 @@
     </h:column>
     
     <h:column >
-   	 	<h:commandLink class="icon-edit-cotacoes" action="#{cotacoesControllerBean.editar(cotacoes)}" value="" >
+        <h:commandLink class="icon-edit-cotacoes" action="#{cotacoesBean.editar(cotacoes)}" value="" >
             <i class="bi bi-pencil-square"></i>
         </h:commandLink>
         	
-   		<h:commandLink class="icon-trash-cotacoes" value="">
-    		<f:setPropertyActionListener target="#{cotacoesControllerBean.selectedCotacao}" value="#{cotacoes}" />
-    		<f:ajax render="modalConfirmacaoExclusao" onevent="abrirModal" />
+   		<h:commandLink class="icon-trash-cotacoes" action = "#{cotacoesBean.prepararExclusão(cotacoes)}">
+    		<f:ajax render="@form modalConfirmacaoExclusao" onevent="abrirModal" />
     		<i class="bi bi-trash3"></i>
 		</h:commandLink>
     </h:column>
@@ -167,12 +166,13 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-modal-cancel" type="button" data-bs-dismiss="modal">Cancelar</button>
-        <h:commandButton class="btn btn-modal-confirmation" value="Excluir" action="#{cotacoesControllerBean.excluir}"></h:commandButton>
+        <h:commandButton class="btn btn-modal-confirmation" value="Excluir" action="#{cotacoesBean.excluir()}"></h:commandButton>
       </div>
       </div>
     </div>
   </div>
   
+                    <!-- 
   <div class="modal fade" id="modalAPI" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -252,6 +252,8 @@
       </div>
     </div>
   </div>
+                    
+                     -->
 		</h:form>
 
 	<footer> Lista De Cotações </footer>

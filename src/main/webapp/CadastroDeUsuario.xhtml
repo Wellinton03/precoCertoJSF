@@ -70,34 +70,110 @@
         </div>
       </div>
     </nav>
+                    
     
     <div class="conteiner-content">
     
     	<div class="box-indicator">
     	
-    		<div class="input-container">
+    		<div class="input-container-username">
    				<h:outputLabel 
-   					class="label-indicator" 
-   					for="inputIndicador"
-   					value="Indicador: " />
+   					class="label" 
+   					for="usernameInput"
+   					value="Usuário: " />
    			
    				<h:inputText
-   					class="input-indicator"
-   					id="inputIndicador"
-   					style="text-transform: uppercase;"
-   					value="#{indicadoresControllerBean.selectedIndicador.description}" />
+                                    class="input"
+                                    id="usernameInput"
+                                    value="#{usuarioBean.authenticationDTO.username}"
+                                    validatorMessage="O nome de usuário deve ter entre 3 e 10 caracteres alfanuméricos.">
+                                    <f:validateRegex pattern="^[a-zA-Z0-9]{3,10}$" />
+                                </h:inputText>
+                                
    			</div>
+            
+                            <h:message for="usernameInput" style="color: red;" />
+            
+             <div class="input-container-email">
+   				<h:outputLabel 
+   					class="label" 
+   					for="emailInput"
+   					value="Email: " />
+   			
+   				<h:inputText
+   					class="input"
+   					id="emailInput"
+                                        value="#{usuarioBean.authenticationDTO.email}" 
+                                        validatorMessage="O e-mail deve ser válido.">
+                                        <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+                                </h:inputText>
+                                
+   			</div>
+                            
+                                <h:message for="emailInput" style="color: red;" />
+            
+            <div class="input-container-password">
+   				<h:outputLabel 
+   					class="label" 
+   					for="passwordInput"
+   					value="Senha: " />
+   			
+   				<h:inputSecret
+                                        class="input"
+                                        id="passwordInput"
+                                        value="#{usuarioBean.authenticationDTO.password}"
+                                        validatorMessage="A senha deve conter ao menos 8 caracteres, incluindo uma letra maiúscula e um número.">
+                                        <f:validateRegex pattern="^(?=.*[A-Z])(?=.*\d).{8,}$" />
+                                </h:inputSecret>
+                                
+   			</div>
+            
+                                <h:message for="passwordInput" style="color: red;" />
+                                
+             <div class="input-container-passwordConfirmation">
+   				<h:outputLabel 
+   					class="label" 
+   					for="passwordConfirmInput"
+   					value="Confirme a Senha: " />
+   			
+   				<h:inputSecret
+   					class="input"
+   					id="passwordConfirmInput"
+                                        value="#{usuarioBean.passwordConfirmation}"
+                                        validatorMessage="Esta senha deve ser igual a anterior">
+                                        <f:validateRegex pattern="^(?=.*[A-Z])(?=.*\d).{8,}$" />
+                                </h:inputSecret>
+                                
+   			</div>
+                                
+                                <h:message for="passwordConfirmInput" style="color: red;" />
+            
+             <div class="input-container-nivel">
+   				<h:outputLabel 
+   					class="label" 
+   					for="levelInput"
+   					value="Nível de Acesso: " />
+   			
+                               <h:selectOneMenu
+                                    id="levelInput"
+                                    class="input-level"
+                                    value="#{usuarioBean.authenticationDTO.role}">
+                                    <f:selectItem itemLabel="Selecione..." noSelectionOption="true" itemValue="" />
+                                    <f:selectItem itemLabel="ADMIN" itemValue="ADMIN" />
+                                    <f:selectItem itemLabel="USER" itemValue="USER" />
+                                </h:selectOneMenu>
+             </div>   
    				<h:commandButton 
    					class="save-indicator"
-   			 		title="Salvar" 
-   			 		value="Salvar" 
-   			 		action="#{indicadoresControllerBean.salvar()}">
+   			 		title="Cadastrar" 
+   			 		value="Cadastrar" 
+                                        action="#{usuarioBean.salvar()}">
    			</h:commandButton>
     	</div>
     </div>
 		</h:form>
 
-	<footer> Lista De Cotações </footer>
+	<footer> Cadastro de Usuários </footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

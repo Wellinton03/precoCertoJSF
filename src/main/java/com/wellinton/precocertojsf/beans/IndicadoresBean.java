@@ -6,8 +6,7 @@
 package com.wellinton.precocertojsf.beans;
 
 import com.wellinton.precocertojsf.apiRequest.IndicadoresRequest;
-import com.wellinton.precocertojsf.dtoRequest.IndicadorRequestDTO;
-import com.wellinton.precocertojsf.dtoResponse.IndicadorResponseDTO;
+import com.wellinton.precocertojsf.dtoRequest.IndicadorDTO;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.Flash;
@@ -31,29 +30,24 @@ public class IndicadoresBean implements Serializable {
     @Inject
     private IndicadoresRequest indicadoresRequest;
     
-    private IndicadorRequestDTO indicadorSelecionado;
-    private List<IndicadorResponseDTO> indicadores;
+    private IndicadorDTO indicadorSelecionado;
+    private List<IndicadorDTO> indicadores;
     
     
     @PostConstruct
     public void Init() {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-            indicadorSelecionado = (IndicadorRequestDTO) flash.get("indicadorSelecionado");
+            indicadorSelecionado = (IndicadorDTO) flash.get("indicadorSelecionado");
             
         if(indicadorSelecionado == null) {
-             System.out.println("Nenhum indicador encontrado no Flash. Inicializando um novo objeto.");
-            indicadorSelecionado = new IndicadorRequestDTO();
+            indicadorSelecionado = new IndicadorDTO();
         }
         carregarIndicadores(); 
        
     }
     
-     public String editar(IndicadorResponseDTO indicadorResponseDTO) {
+     public String editar(IndicadorDTO indicadorRequestDTO) {
          Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-
-            IndicadorRequestDTO indicadorRequestDTO = new IndicadorRequestDTO();
-            indicadorRequestDTO.setId(indicadorResponseDTO.getId());
-            indicadorRequestDTO.setDescription(indicadorResponseDTO.getDescription());
 
             flash.put("indicadorSelecionado", indicadorRequestDTO); 
             flash.setKeepMessages(true);
@@ -62,13 +56,9 @@ public class IndicadoresBean implements Serializable {
     return "CadastroDeIndicadores?faces-redirect=true";
 }
     
-    public void prepararExclusão(IndicadorResponseDTO indicadorResponse){
-        if(indicadorResponse != null) {
-             if (indicadorSelecionado == null) {
-            indicadorSelecionado = new IndicadorRequestDTO();
-        }
-            indicadorSelecionado.setId(indicadorResponse.getId());
-            indicadorSelecionado.setDescription(indicadorResponse.getDescription());
+    public void prepararExclusão(IndicadorDTO indicadorRequestDTO){
+        if(indicadorRequestDTO != null) {
+            this.indicadorSelecionado = indicadorRequestDTO;
         }
     }
     
@@ -76,7 +66,7 @@ public class IndicadoresBean implements Serializable {
         this.indicadores = indicadoresRequest.listarIndicadores();
     }
     
-    public List<IndicadorResponseDTO> getIndicadores() {
+    public List<IndicadorDTO> getIndicadores() {
         return indicadores;
     }
     
@@ -100,15 +90,15 @@ public class IndicadoresBean implements Serializable {
         
     }
 
-    public IndicadorRequestDTO getIndicadorSelecionado() {
+    public IndicadorDTO getIndicadorSelecionado() {
         return indicadorSelecionado;
     }
 
-    public void setIndicadorSelecionado(IndicadorRequestDTO indicadorSelecionado) {
+    public void setIndicadorSelecionado(IndicadorDTO indicadorSelecionado) {
         this.indicadorSelecionado = indicadorSelecionado;
     }
     
-    public IndicadorResponseDTO getIndicadorById(Long id) {
+    public IndicadorDTO getIndicadorById(Long id) {
         System.out.println("id recebido no bean" + id);
     if (indicadores == null || id == null) {
         System.out.println(indicadores);

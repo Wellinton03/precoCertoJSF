@@ -94,8 +94,8 @@
    				<h:selectOneMenu
    					id="indicator"
    					class="input-indicator"
-                                        value="#{cotacoesBean.cotacaoRequestDTO.indicadorRequestDTO}"
-                                        >
+                                        value="#{cotacoesBean.cotacaoRequestDTO.indicadorDTO}"
+                                        converter="indicadorDTOConverter">
                         <f:selectItem itemLabel="Selecione..."
                                       noSelectionOption="true"
                                       itemValue="" />

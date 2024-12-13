@@ -4,9 +4,10 @@
  */
 package com.wellinton.precocertojsf.apiRequest;
 
-import com.wellinton.precocertojsf.dtoRequest.IndicadorRequestDTO;
-import com.wellinton.precocertojsf.dtoResponse.IndicadorResponseDTO;
+import com.wellinton.precocertojsf.auth.HeaderProvider;
+import com.wellinton.precocertojsf.dtoRequest.IndicadorDTO;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,26 +27,32 @@ public class IndicadoresRequest {
     private final RestTemplate restTemplate;
     private final String baseUrl = "http://localhost:8080/precoCerto/api/indicador";
     
+    @Inject
+    private HeaderProvider header;
+    
     public IndicadoresRequest() {
         this.restTemplate = new RestTemplate();
     }
     
-    public List<IndicadorResponseDTO> listarIndicadores() {
+    public List<IndicadorDTO> listarIndicadores() {
         String url = baseUrl + "/listar";
         
-        return List.of(restTemplate.getForObject(url, IndicadorResponseDTO[].class));
+        HttpEntity<String> entity = new HttpEntity<>(header.getHeadersWithToken());
+        return List.of(restTemplate.exchange(url, HttpMethod.GET, entity, IndicadorDTO[].class).getBody());
     }
     
-    public void salvar(IndicadorRequestDTO data) {
+    public void salvar(IndicadorDTO data) {
         String url = baseUrl + "/cadastrar";
         
-        restTemplate.postForObject(url, data, Void.class);
+        HttpEntity<IndicadorDTO> entity = new HttpEntity<>(data, header.getHeadersWithToken());
+        restTemplate.postForObject(url, entity, Void.class);
     }
     
-    public void editar(IndicadorRequestDTO data) {
+    public void editar(IndicadorDTO data) {
         String url = baseUrl + "/editar";
         
-        restTemplate.put(url, data, Void.class);
+        HttpEntity<IndicadorDTO> entity = new HttpEntity<>(data, header.getHeadersWithToken());
+        restTemplate.put(url, entity);
     }
     
      public void excluir(Long id) {
@@ -54,10 +61,8 @@ public class IndicadoresRequest {
          HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         
-         HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
-        
-         restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class
-   );
+         HttpEntity<String> entity = new HttpEntity<>("", header.getHeadersWithToken());
+        restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
     }
     
 }

@@ -6,9 +6,10 @@ package com.wellinton.precocertojsf.apiRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.wellinton.precocertojsf.auth.HeaderProvider;
 import com.wellinton.precocertojsf.dtoRequest.CotacaoRequestDTO;
-import com.wellinton.precocertojsf.dtoResponse.CotacaoResponseDTO;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,9 @@ public class CotacoesRequest {
     private final RestTemplate restTemplate;
     private final String baseUrl = "http://localhost:8080/precoCerto/api/cotacao";
     
+    @Inject
+    private HeaderProvider header;
+    
      public CotacoesRequest() {
         this.restTemplate = createRestTemplate();
     }
@@ -44,33 +48,31 @@ public class CotacoesRequest {
         return restTemplate;
     }
      
-     public List<CotacaoResponseDTO> listarCotacoes() {
+     public List<CotacaoRequestDTO> listarCotacoes() {
         String url = baseUrl + "/listar";
         
-        return List.of(restTemplate.getForObject(url, CotacaoResponseDTO[].class));
+        HttpEntity<String> entity = new HttpEntity<>(header.getHeadersWithToken());
+        return List.of(restTemplate.exchange(url, HttpMethod.GET, entity, CotacaoRequestDTO[].class).getBody());
     }
      
       public void salvar(CotacaoRequestDTO data) {
         String url = baseUrl + "/cadastrar";
         
-        restTemplate.postForObject(url, data, Void.class);
+         HttpEntity<CotacaoRequestDTO> entity = new HttpEntity<>(data, header.getHeadersWithToken());
+        restTemplate.postForObject(url, entity, Void.class);
     }
     
     public void editar(CotacaoRequestDTO data) {
         String url = baseUrl + "/editar";
         
-        restTemplate.put(url, data, Void.class);
+         HttpEntity<CotacaoRequestDTO> entity = new HttpEntity<>(data, header.getHeadersWithToken());
+        restTemplate.put(url, entity);
     }
     
      public void excluir(Long id) {
-        String url = baseUrl + "/excluir/" + id;
-        
-         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        
-         HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
-        
-         restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class
-   );
-    }
+    String url = baseUrl + "/excluir/" + id;
+
+    HttpEntity<String> entity = new HttpEntity<>("", header.getHeadersWithToken());
+        restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+}
 }

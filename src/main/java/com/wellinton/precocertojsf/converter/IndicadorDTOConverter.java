@@ -1,26 +1,32 @@
 package com.wellinton.precocertojsf.converter;
 
 import com.wellinton.precocertojsf.beans.IndicadoresBean;
+import com.wellinton.precocertojsf.dtoRequest.IndicadorDTO;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
 
-@FacesConverter(value = "indicadorDTOConverter")
+@FacesConverter(value = "indicadorDTOConverter", managed = true)
 public class IndicadorDTOConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         System.out.println("getAsObject chamado com valor: " + value);
+
         if (value == null || value.trim().isEmpty()) {
             return null;
         }
 
-         try {
+        try {
             Long id = Long.parseLong(value);
-            IndicadoresBean indicadoresBean = context.getApplication()
-                                                     .evaluateExpressionGet(context, "#{indicadoresBean}", IndicadoresBean.class);
-            return indicadoresBean.getIndicadorById(id);
+
+            IndicadoresBean bean = context.getApplication()
+                                       .evaluateExpressionGet(context, "#{indicadoresBean}", IndicadoresBean.class);
+
+            IndicadorDTO indicador = bean.getIndicadorById(id);
+            
+            return indicador;
         } catch (NumberFormatException e) {
             System.err.println("Erro ao converter valor para Long: " + value);
         } catch (Exception e) {
@@ -30,19 +36,19 @@ public class IndicadorDTOConverter implements Converter {
         return null;
     }
 
-   @Override
-public String getAsString(FacesContext context, UIComponent component, Object value) {
-    System.out.println("getAsString chamado com valor: " + value);
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        System.out.println(value);
+        if (value == null) {
+            return "";
+        }
 
-    if (value == null) {
+        if (value instanceof IndicadorDTO) {
+            IndicadorDTO indicador = (IndicadorDTO) value;
+             System.out.println("getAsString: Indicador ID retornado: " + indicador.getId());
+            return indicador.getId() != null ? indicador.getId().toString() : "";
+        }
+
         return "";
     }
-
-    if (value instanceof Long) {
-        return value.toString(); 
-    }
-
-    System.err.println("O valor não é uma instância de Long ou IndicadorRequestDTO: " + value);
-    return "";
-}
 }

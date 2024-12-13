@@ -360,13 +360,13 @@
 	}
 	
 	.input-indicator {
-    	background-color: #4d5162;
-    	color: white ;
-    	border-radius: 10px;
-    	border: none;
-		outline: none;
-    	padding: 5px;
-    	width: 200px;
+            background-color: #4d5162;
+            color: white ;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            width: 200px;
 }
 
 	.label-price {
@@ -665,6 +665,72 @@
 	#tooltip {
         color: black;
 	}
+        
+        
+        /* Cadastro De Usuário */
+        
+        .label {
+		color:white;
+		margin-right: 5px;
+		margin-left: -13px;
+		
+	}
+	
+	.input {
+            background-color: #4d5162;
+            color: white ;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            width: 200px;
+}
+
+
+	.input-container-username {
+    	display: flex;
+    	align-items: center;
+    	margin-bottom: 15px;
+        margin-right: 2%;
+}
+
+.input-container-email {
+    	display: flex;
+    	align-items: center;
+    	margin-bottom: 15px; 
+}
+
+.input-container-password {
+    	display: flex;
+    	align-items: center;
+    	margin-bottom: 15px; 
+}
+
+.input-container-passwordConfirmation {
+    	display: flex;
+    	align-items: center;
+    	margin-bottom: 15px;
+        margin-right: 10%;
+}
+
+.input-container-nivel {
+    	display: flex;
+    	align-items: center;
+    	margin-bottom: 15px;
+        margin-right: 9%;
+}       
+
+	
+	.input-level {
+            background-color: #4d5162;
+            color: white ;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            width: 200px;
+}
+        
 	
 /* Footer*/
 

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class CotacaoRequestDTO {
 
     private Long id;
-    private IndicadorRequestDTO indicadorRequestDTO;
+    private IndicadorDTO indicadorDTO;
     private LocalDateTime dataHora;
     private Double valor;
     
@@ -21,9 +21,9 @@ public class CotacaoRequestDTO {
         
     }
     
-    public CotacaoRequestDTO(Long id, IndicadorRequestDTO indicadorRequestDTO, LocalDateTime dataHora, Double valor) {
+    public CotacaoRequestDTO(Long id, IndicadorDTO indicadorDTO, LocalDateTime dataHora, Double valor) {
         this.id = id;
-        this.indicadorRequestDTO = indicadorRequestDTO;
+        this.indicadorDTO = indicadorDTO;
         this.dataHora = dataHora;
         this.valor = valor;
     }
@@ -36,13 +36,12 @@ public class CotacaoRequestDTO {
         this.id = id;
     }
 
-    public IndicadorRequestDTO getIndicadorRequestDTO() {
-        return indicadorRequestDTO;
+    public IndicadorDTO getIndicadorDTO() {
+        return indicadorDTO;
     }
 
-    public void setIndicadorRequestDTO(IndicadorRequestDTO indicadorRequestDTO) {
-        System.out.println("indicadorRequest " + indicadorRequestDTO);
-        this.indicadorRequestDTO = indicadorRequestDTO;
+    public void setIndicadorDTO(IndicadorDTO indicadorDTO) {
+        this.indicadorDTO = indicadorDTO;
     }
 
     public LocalDateTime getDataHora() {
@@ -50,7 +49,6 @@ public class CotacaoRequestDTO {
     }
 
     public void setDataHora(LocalDateTime dataHora) {
-        System.out.println(dataHora);
         this.dataHora = dataHora;
     }
 
@@ -59,13 +57,12 @@ public class CotacaoRequestDTO {
     }
 
     public void setValor(Double valor) {
-        System.out.println(valor);
         this.valor = valor;
     }
 
     @Override
     public String toString() {
-        return "CotacaoRequestDTO{" + "id=" + id + ", indicadorRequestDTO=" + indicadorRequestDTO + ", dataHora=" + dataHora + ", valor=" + valor + '}';
+        return "CotacaoRequestDTO{" + "id=" + id + ", indicadorRequestDTO=" + indicadorDTO + ", dataHora=" + dataHora + ", valor=" + valor + '}';
     }
     
     
