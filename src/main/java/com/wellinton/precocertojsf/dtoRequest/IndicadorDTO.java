@@ -4,6 +4,8 @@
  */
 package com.wellinton.precocertojsf.dtoRequest;
 
+import java.util.Objects;
+
 /**
  *
  * @author welli
@@ -48,6 +50,28 @@ public class IndicadorDTO {
     @Override
     public String toString() {
         return "IndicadorRequestDTO{" + "description=" + description + ", id=" + id + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final IndicadorDTO other = (IndicadorDTO) obj;
+        return Objects.equals(this.id, other.id);
     }
      
      
